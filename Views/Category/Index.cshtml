@@ -1,0 +1,114 @@
+@using DBMS_Project.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Azure.Core
+@model List<DBMS_Project.Models.Category>
+@using Microsoft.AspNetCore.Http
+
+@* @{ *@
+@*     // Retrieve the selected place from the query parameters *@
+@*     string selectedPlace = Request.Query["place"]; *@
+@*     PlaceType selectedPlaceType; *@
+@* *@
+@*     // Parse the string to PlaceType enum *@
+@*     Enum.TryParse(selectedPlace, true, out selectedPlaceType); *@
+@* } *@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Category List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        /* Custom CSS for rounding card edges and adjusting card size */
+        .card {
+            border-radius: 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-body {
+            flex-grow: 1;
+        }
+       body{
+         background-color: antiquewhite;
+}
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">Welcome to Canteen</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="Index2">Cart <span class="badge badge-primary"></span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Category Cards -->
+    <div class="container">
+        <div class="row">
+            @foreach (var category in Model)
+            {
+               // if (category.Place == selectedPlace)
+                {
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="@category.Image" class="card-img-top" alt="Category Image"/>
+                            <div class="card-body">
+                                <h5 class="card-title">@category.Name</h5>
+                                <p class="card-text"><strong>Description:</strong> @category.Description</p>
+                                <p class="card-text"><strong>Price:</strong> ₹@category.Price</p>
+                                <p class="card-text"><strong>Type:</strong> @category.Type</p>
+                                <p class="card-text"><strong>Size:</strong> @category.Size</p>
+                                <p class="card-text"><strong>Place:</strong> @category.Place</p>
+
+
+                                <button class="btn btn-primary btn-block" onclick="addToCart(@category.Id)">Add to Cart</button>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Function to add item to cart
+        function addToCart(itemId) {
+            $.ajax({
+                url: '@Url.Action("AddToCart", "Cart")', // URL to CartController AddToCart action
+                type: 'POST',
+                data: { itemId: itemId },
+                success: function (response) {
+                    // Handle success response (if needed)
+                    alert('Item added to cart successfully!');
+                },
+                // error: function (xhr, status, error) {
+                //     // Handle error (if needed)
+                //     alert('Error adding item to cart: ' + error);
+                // }
+                error: function (xhr, status, error) {
+                    // Redirect to another page in case of error
+                    window.location.href = 'Identity/Account/Login';
+                }
+
+            });
+        }
+    </script>
+</body>
+</html>

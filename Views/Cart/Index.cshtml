@@ -1,0 +1,176 @@
+@using Azure.Core
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-between align-items-center mb-4">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-outline-primary" onclick="history.back()">
+                    <i class="fas fa-long-arrow-alt-left me-2"></i> Continue Shopping
+                </button>
+            </div>
+            <div class="col-md-6 text-end">
+                <h3 class="fw-normal mb-0">Shopping Cart <i class="fas fa-long-arrow-alt-right ms-2"></i></h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+ 
+
+   
+                    <!-- Loop through categories -->
+                    @foreach (var items in Model)
+                    {
+                        <!-- Individual Item Card -->
+                        <div class="card rounded-3 mb-4">
+                            <div class="card-body p-4">
+                                <div class="row d-flex justify-content-between align-items-center">
+                                    <div class="col-md-2 col-lg-2 col-xl-2">
+                                        <!-- Item Image -->
+                                        <img src="@items.Image" class="img-fluid rounded-3" alt="@items.Name">
+                                    </div>
+                                    <div class="col-md-3 col-lg-3 col-xl-3">
+                                        <!-- Item Details -->
+                                        <p class="lead fw-normal mb-2">@items.Name</p>
+                                        <p><span class="text-muted">Size: </span>@items.Size </p>
+                                        <p><span class="text-muted">Place: </span>@items.Place</p>
+                                        <p><span class="text-muted">Type: </span>@items.Type</p>
+                                    </div>
+                               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                                  
+                                   <!-- Empty Quantity Box -->
+                                   <input id="quantity-@items.Id" min="0" name="quantity" value="@items.quantity" type="text" class="form-control" readonly>
+                               </div>
+
+                                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                        <!-- Item Price -->
+                                        <h5 class="mb-0">₹@(items.Price * items.quantity)</h5>
+                                   
+                                        <!-- Remove Item Button -->
+                                        <form method="post" action="/Cart/RemoveItem">
+                                            <input type="hidden" name="itemId" value="@items.Id" />
+                                            <button type="submit" class="btn btn-danger btn-lg">
+                                                <i class="fas fa-trash"></i> Remove
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                
+           
+                <!-- Total Price Section -->
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Price</h5>
+                        <!-- Calculate total price here -->
+                        @{
+                            int totalPrice = 0;
+                            foreach (var item in Model)
+                            {
+                                totalPrice += item.Price * item.quantity;
+                            }
+                        }
+                        <p class="card-text">₹@totalPrice</p>
+                    </div>
+                
+                <!-- Proceed to Pay Button -->
+               <div class="card mt-4">
+                   <div class="card-body text-end">
+                       <a class="btn btn-warning btn-lg" asp-controller="Payment" asp-action="ProcessPayment">Proceed to Pay</a>
+                   </div>
+               </div>
+            </div>
+            
+           
+   
+
+    
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+                <script>
+                 // // Function to decrease quantity
+    // function decreaseQuantity(button) {
+    //     var input = button.nextElementSibling;
+    //     var currentValue = parseInt(input.value);
+    //     if (currentValue > 1) {
+    //         input.value = currentValue - 1;
+    //     }
+    // }
+    //
+    // // Function to increase quantity
+    // function increaseQuantity(button) {
+    //     var input = button.previousElementSibling;
+    //     var currentValue = parseInt(input.value);
+    //     input.value = currentValue + 1;
+    // }
+
+    // Function to remove item
+    function removeItem(button) {
+        var card = button.closest('.card');
+        card.remove();
+    }
+    
+      function decreaseQuantity(itemId) {
+            var quantityInput = document.getElementById("quantity-" + itemId);
+            var currentValue = parseInt(quantityInput.value);
+            if (currentValue > 0) {
+                quantityInput.value = currentValue - 1;
+                updateQuantity(itemId, quantityInput.value);
+            }
+        }
+    
+        function increaseQuantity(itemId) {
+            var quantityInput = document.getElementById("quantity-" + itemId);
+            var currentValue = parseInt(quantityInput.value);
+            quantityInput.value = currentValue + 1;
+            updateQuantity(itemId, quantityInput.value);
+        }
+
+        function updateQuantity(itemId, newQuantity) {
+               // Perform an AJAX POST request to your server-side endpoint to update the quantity
+               $.ajax({
+                   url: 'jetbrains://rd/navigate/reference?project=DBMS-Project&path=DBMS-Project/Controllers/CartController.cs', // Replace with your actual endpoint URL
+                   type: 'POST',
+                   data: {
+                       itemId: itemId,
+                       newQuantity: newQuantity
+                   },
+                   success: function(response) {
+                       console.log('Quantity updated successfully');
+                   },
+                   error: function(xhr, status, error) {
+                       console.error('Error updating quantity:', error);
+                   }
+               });
+           }
+        
+         function refreshPage() {
+                window.location.reload();
+            }
+            success: functio(response)
+             {
+                if (response.success) {
+                    // Update the displayed price for the item
+                    $('#quantity-' + itemId).val(newQuantity);
+                    $('#totalPrice-' + itemId).text('₹' + response.totalPrice);
+                    
+                    // Calculate total price again by summing up prices of all items
+                    var totalPrice = 0;
+                    $('.item-price').each(function() {
+                        totalPrice += parseInt($(this).text().replace('₹', ''));
+                    });
+                    
+                    // Update the total price on the page
+                    $('#totalPrice').text('₹' + totalPrice);
+                } else {
+                    console.error('Error updating quantity:', response.error);
+                }
+            }
+
+</script>

@@ -1,0 +1,30 @@
+@model DBMS_Project.Models.Admin
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<form asp-action="Login" method="post">
+    <div class="row gy-2 overflow-hidden">
+        <div class="col-12">
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" asp-for="Email" id="email" placeholder="name@example.com" required>
+                <label for="email" class="form-label">Email</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" asp-for="Password" id="password" placeholder="Password" required>
+                <label for="password" class="form-label">Password</label>
+            </div>
+        </div>
+        
+        <div class="col-12">
+            <div class="d-grid my-3">
+                
+                    <!-- Form fields for email and password -->
+                
+                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                <button class="btn btn-primary btn-lg" type="submit">Log in</button>
+                
+            </div>
+        </div>
+       
+    </div>
+</form>

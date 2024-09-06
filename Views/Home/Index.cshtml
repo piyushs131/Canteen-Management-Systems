@@ -1,0 +1,150 @@
+﻿@using Microsoft.AspNetCore.Http
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/ASP.NET_Tutorial.styles.css" asp-append-version="true"/>
+</head>
+
+<style>
+   
+</style>
+<body>
+<header>
+   
+    
+    <div class="container-fluid bg-dark py-3">
+        <h1 class="text-light text-center">Welcome to Jamia Canteens</h1>
+    </div>
+    
+    @* <div class="canteen"> *@
+    @*     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9JSYozcb4cEuodYvIqpDUr58Q-Y-ZGuRDBDWvoZ4mHQ&s" height = 100%> *@
+    @* *@
+    @* </div> *@
+    
+    
+</header>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="card" style="width: 30rem; height: 45rem; margin: 75px">
+        <img src="  https://10619-2.s.cdn12.com/rests/original/109_506967486.jpg">
+             <div class="card-body">
+        <h5 class="card-title"> Hygienic Canteen</h5>
+        <p class="card-text">      
+        <strong>Opening Hours:<br>
+        
+            <pre style="font-size: medium">           
+              Sunday:    8am–8pm
+              Monday:    8am–9pm
+              Tuesday:   8am–9pm
+              Wednesday: 8am–9pm
+              Thursday:  8am–9pm
+              Friday:    8am–9pm
+              Saturday:  8am–8pm
+                            </pre></strong>
+            <a href="/Category?place=Hygiene" class="btn btn-primary" >EXPLORE</a>
+        </div>
+    </div>
+    <div class="card" style="width: 30rem; height: 45rem; margin: 75px ">
+          <img src=" https://www.opindia.com/wp-content/uploads/2022/07/Jamia-canteen-e1658239372392.jpg" class="card-img-top" alt="...">
+           <div class="card-body">
+               <h5 class="card-title">Jamia Central Canteen</h5>
+             <p class="card-text">      
+                    <strong>Opening Hours:<br>
+                    
+                        <pre style="font-size: medium">             
+                         Sunday:    8am–8pm
+                         Monday:    8am–9pm
+                         Tuesday:   8am–9pm
+                         Wednesday: 8am–9pm
+                         Thursday:  8am–9pm
+                         Friday:    8am–9pm
+                         Saturday:  8am–8pm
+                                              </pre></strong>
+                       <a href="/Category?place=Central" class="btn btn-primary">EXPLORE</a>
+
+        </div>
+    </div>
+</div>
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="card" style="width: 30rem; height: 45rem; margin: 75px ">
+        <img src="https://live.staticflickr.com/8114/8674068395_8699057f55_b.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title"> Castro CAFE</h5>
+            <p class="card-text">      
+            <strong>Opening Hours:<br>
+                    
+                <pre style="font-size: medium">            
+                           Sunday:    8am–8pm
+                           Monday:    8am–9pm
+                           Tuesday:   8am–9pm
+                           Wednesday: 8am–9pm
+                           Thursday:  8am–9pm
+                            Friday:    8am–9pm
+                            Saturday:  8am–8pm
+                                               </pre></strong>
+            <a href="/Category?place=Castro" class="btn btn-primary">EXPLORE</a>
+        </div>
+    </div>
+    
+    <div class="card" style="width: 30rem; height: 45rem; margin: 75px ">
+        <img src="https://thevioletjourno.files.wordpress.com/2018/10/images-138355478744454222922.jpg?w=602" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Fet Canteen</h5>
+            <p class="card-text">      
+            <strong>Opening Hours:<br>
+                
+                <pre style="font-size: medium">                                       
+                            Sunday:    8am–8pm
+                            Monday:    8am–9pm
+                            Tuesday:   8am–9pm
+                            Wednesday: 8am–9pm
+                            Thursday:  8am–9pm
+                            Friday:    8am–9pm
+                            Saturday:  8am–8pm
+                                          </pre></strong>
+            <a href="/Category?place=Fet" class="btn btn-primary" id="addtoCartButton">EXPLORE</a>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="width: 18rem;"></div>
+<div class="card" style="width: 18rem;"></div>
+<div class="row">
+    <div class="card" style="width: 18rem;"></div>
+    <div class="card" style="width: 18rem;"></div>
+</div>
+<footer class="border-top footer text-muted">
+   
+</footer>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+  <script>
+        $(document).ready(function() {
+            // Attach a click event listener to the Add to Cart button
+            $('#addToCartButton').click(function() {
+                // Make an AJAX request to the YourCategoryAction endpoint
+                $.ajax({
+                    url: '/Cart/YourCategoryAction',
+                    type: 'GET',
+                    success: function(data) {
+                        // Update the view with the response data, if necessary
+                        console.log('YourCategoryAction was called successfully.');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error calling YourCategoryAction:', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,139 @@
+@page
+@model List<DBMS_Project.Models.Payment>
+@using Azure.Core
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="css/style.css">
+    <title>DBMS_Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/DBMS_Project.styles.css" asp-append-version="true"/>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="" asp-controller="" asp-action="">JAMIA Canteen</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Login">Oders</a>
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Accounts</a>
+                        
+                    </li>
+                    
+                    <li class="nav-item">
+                                            
+                        <a class="nav-link text-dark" asp-area="" asp-controller="" asp-action="">Inventory</a>
+                                            
+                    </li>
+                
+                
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="" asp-action="">Logout</a>
+                    </li>
+                
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="content">
+    
+    <div class="container">
+        <h1 class="text-center">ORDERS</h1>
+
+      
+
+        <div class="table-responsive custom-table-responsive">
+
+            <table class="table custom-table">
+                <thead>
+                <tr>  
+
+              
+              
+                    <th scope="col">Order Status</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Details</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Transaction Id</th>
+                    <th scope="col">Time</th>
+                
+                </tr>
+                </thead>
+                @foreach (var pays in Model)
+                {
+
+                    <tbody>
+                    <tr scope="row">
+                        <th scope="row">
+                            <label class="control control--checkbox">
+                                <input type="checkbox"/>
+                                <div class="control__indicator"></div>
+                            </label>
+                        </th>
+                        <td>
+                            @pays.Id
+                        </td>
+                        <td><a href="#">@pays.FirstName</a></td>
+                        <td>
+                            @pays.ItemsJson
+
+                        </td>
+                        <td> @pays.TotalAmount</td>
+                        <td>@pays.TransactionId</td>
+                        <td>@pays.PaymentDateTime</td>
+                    </tr>
+
+                    @* @foreach (var pays in Model) *@
+                    @*             { *@
+                    @*                 <tr> *@
+                    @*                     <td>@pays.Id</td> *@
+                    @*                     <td>@pays.FirstName</td> *@
+                    @*                     <td>@pays.ItemsJson</td> *@
+                    @*                     <td>@pays.TotalAmount</td> *@
+                    @*                     <td>@pays.TransactionId</td> *@
+                    @*                     <td>@pays.PaymentDateTime</td> *@
+                    @*                     <td>@pays.UserId</td> *@
+                    @*                 </tr> *@
+                    @*             } *@
+
+
+
+
+
+                    </tbody>
+                }
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+    
+
+</body>
+</html>
